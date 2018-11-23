@@ -29,19 +29,25 @@
 ## OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 ## SUCH DAMAGE.
 ##
-
+#
 top := $(CURDIR)
 src := src
+#srck := /root/coreboot/util/kconfig
 srck := $(top)/util/kconfig
+#obj = build而且是强制的
 obj ?= build
 override obj := $(subst $(top)/,,$(abspath $(obj)))
+#objutil := build/util
 objutil ?= $(obj)/util
+#objk := build/util/kconfig
 objk := $(objutil)/kconfig
+#/root/coreboot/build  obj的绝对路径
 absobj := $(abspath $(obj))
 
 COREBOOT_EXPORTS := COREBOOT_EXPORTS
 COREBOOT_EXPORTS += top src srck obj objutil objk
 
+#DOTCONFIG := /root/coreboot/.config   这个是隐藏文件
 DOTCONFIG ?= $(top)/.config
 KCONFIG_CONFIG = $(DOTCONFIG)
 KCONFIG_AUTOHEADER := $(obj)/config.h
@@ -60,8 +66,10 @@ COREBOOT_EXPORTS += KCONFIG_NEGATIVES KCONFIG_STRICT
 TOPLEVEL := .
 
 CONFIG_SHELL := sh
+#KBUILD_DEFCONFIG := configs/defconfig  这个文件是没有的,是不是载入默认的配置
 KBUILD_DEFCONFIG := configs/defconfig
 UNAME_RELEASE := $(shell uname -r)
+#HAVE_DOTCONFIG := /root/coreboot/.config
 HAVE_DOTCONFIG := $(wildcard $(DOTCONFIG))
 MAKEFLAGS += -rR --no-print-directory
 
